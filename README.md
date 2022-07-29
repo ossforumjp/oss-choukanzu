@@ -20,5 +20,5 @@ OSS鳥瞰図とは、こういったOSS初心者を手助けするために複�
 Issuesを活用してください。
 
 ## 参加方法
-ホームページの入会案内をご確認ください。
-http://ossforum.jp/index.php/guidance/
+ホームページの[入会案内](http://ossforum.jp/index.php/guidance/)をご確認ください。
+
