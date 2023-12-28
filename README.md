@@ -5,7 +5,7 @@ This repository is related to Choukanzu WG of the Japan OSS Promotion Forum.
 「OSSを使いたいけど、○○の分野ではどのOSSがよく使われているのだろう？」
 OSS鳥瞰図とは、こういったOSS初心者を手助けするために複雑多岐にわたるOSSを、
 視覚的に俯瞰できるようまとめたものです。鳥瞰図WG (旧クラウド技術部会)では世論の活用状況などを観察し、
-2014年からOSS鳥瞰図を毎年更新することを目指していまず。
+2014年からOSS鳥瞰図を毎年更新することを目指しています。
 
 ## 鳥瞰図WGについて
 [鳥瞰図WG](http://ossforum.jp/index.php/choukanzu-wg/)は[日本OSS推進フォーラム](http://ossforum.jp/)で活動をしているWGのひとつです。
