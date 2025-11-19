@@ -180,12 +180,25 @@ function renderOSSLandscape() {
             nameSpan.className = 'oss-name';
             nameSpan.textContent = item.name;
 
-            // アイコン
-            const icon = document.createElement('i');
-            icon.className = 'oss-icon ' + getIconClass(item.name, categoryData.category);
+            // 公式アイコンを取得
+            const iconUrl = getOfficialIconUrl(item.name);
 
-            ossItem.appendChild(nameSpan);
-            ossItem.appendChild(icon);
+            if (iconUrl) {
+                // 公式アイコンがある場合はimg要素を使用
+                const icon = document.createElement('img');
+                icon.className = 'oss-icon';
+                icon.src = iconUrl;
+                icon.alt = item.name + ' logo';
+                icon.onerror = function() {
+                    // アイコン読み込みエラー時はフォールバック
+                    this.style.display = 'none';
+                };
+                ossItem.appendChild(nameSpan);
+                ossItem.appendChild(icon);
+            } else {
+                // アイコンがない場合はテキストのみ
+                ossItem.appendChild(nameSpan);
+            }
 
             // 削除ボタン
             const deleteBtn = document.createElement('button');
@@ -256,64 +269,97 @@ function updateTooltipPosition(e) {
     tooltip.style.top = `${y}px`;
 }
 
-// OSS名とカテゴリに基づいてアイコンを取得
-function getIconClass(name, category) {
+// OSS名に基づいて公式アイコンのURLを取得
+function getOfficialIconUrl(name) {
     const nameLower = name.toLowerCase();
 
-    // 特定のOSSに対するアイコンマッピング
-    const iconMap = {
-        'kubernetes': 'fa-dharmachakra',
-        'docker': 'fa-docker',
-        'jenkins': 'fa-gears',
-        'postgresql': 'fa-database',
-        'mysql': 'fa-database',
-        'mongodb': 'fa-database',
-        'redis': 'fa-database',
-        'cassandra': 'fa-database',
-        'sqlite': 'fa-database',
-        'mariadb': 'fa-database',
-        'wordpress': 'fa-wordpress',
-        'drupal': 'fa-drupal',
-        'joomla': 'fa-joomla',
-        'git': 'fa-git-alt',
-        'github': 'fa-github',
-        'gitlab': 'fa-gitlab',
-        'linux': 'fa-linux',
-        'ubuntu': 'fa-ubuntu',
-        'centos': 'fa-centos',
-        'fedora': 'fa-fedora',
-        'python': 'fa-python',
-        'java': 'fa-java',
-        'node': 'fa-node-js',
-        'react': 'fa-react',
-        'angular': 'fa-angular',
-        'vue': 'fa-vuejs',
-        'aws': 'fa-aws',
-        'libreoffice': 'fa-file-alt',
-        'nextcloud': 'fa-cloud',
+    // Simple Icons のslugマッピング（OSS名 -> Simple Iconsのスラッグ）
+    const simpleIconsMap = {
+        // Analytics & BI
+        'apache superset': 'apachesuperset',
+        'superset': 'apachesuperset',
+        'dbt': 'dbt',
+        'kibana': 'kibana',
+        'metabase': 'metabase',
+        'pentaho': 'pentaho',
+        'redash': 'redash',
+        'talend': 'talend',
+        'talend open studio': 'talend',
+
+        // Office & Productivity
+        'libreoffice': 'libreoffice',
+        'vscodium': 'vscodium',
+        'collabora': 'collaboraonline',
+        'collabora online': 'collaboraonline',
+
+        // Communications
+        'asterisk': 'asterisk',
+        'freeswitch': 'freeswitch',
+        'jami': 'jami',
+        'openfoam': 'openfoam',
+
+        // Collaboration
+        'etherpad': 'etherpad',
+        'mattermost': 'mattermost',
+        'rocket.chat': 'rocketdotchat',
+        'bigbluebutton': 'bigbluebutton',
+        'jitsi': 'jitsi',
+        'jitsi meet': 'jitsi',
+        'nextcloud': 'nextcloud',
+
+        // Content Management
+        'alfresco': 'alfresco',
+        'drupal': 'drupal',
+        'joomla': 'joomla',
+        'wordpress': 'wordpress',
+        'mediawiki': 'mediawiki',
+        'moodle': 'moodle',
+
+        // E-Commerce
+        'woocommerce': 'woocommerce',
+        'magento': 'magento',
+        'prestashop': 'prestashop',
+        'zen cart': 'zencart',
+        'opencart': 'opencart',
+
+        // Infrastructure & Deployment
+        'kubernetes': 'kubernetes',
+        'docker': 'docker',
+        'ansible': 'ansible',
+        'terraform': 'terraform',
+        'opentofu': 'opentofu',
+        'helm': 'helm',
+        'jenkins': 'jenkins',
+
+        // Database
+        'postgresql': 'postgresql',
+        'mysql': 'mysql',
+        'sqlite': 'sqlite',
+        'mariadb': 'mariadb',
+        'mongodb': 'mongodb',
+        'redis': 'redis',
+        'cassandra': 'apachecassandra',
+        'apache cassandra': 'apachecassandra',
+
+        // Security & Monitoring
+        'prometheus': 'prometheus',
+        'grafana': 'grafana',
+        'zabbix': 'zabbix',
+        'nagios': 'nagios',
+        'snort': 'snort',
+        'suricata': 'suricata',
+        'ossec': 'ossec',
     };
 
-    // 名前に基づく検索
-    for (let key in iconMap) {
-        if (nameLower.includes(key)) {
-            return 'fab ' + iconMap[key];
-        }
+    // Simple Iconsのスラッグを取得
+    const slug = simpleIconsMap[nameLower];
+
+    if (slug) {
+        // Simple Icons CDNから取得（白色のアイコン）
+        return `https://cdn.simpleicons.org/${slug}/white`;
     }
 
-    // カテゴリに基づくデフォルトアイコン
-    const categoryIcons = {
-        'analytics': 'fa-chart-line',
-        'office': 'fa-file-alt',
-        'communications': 'fa-comments',
-        'collaboration': 'fa-users',
-        'cms': 'fa-file-code',
-        'ecommerce': 'fa-shopping-cart',
-        'infrastructure': 'fa-server',
-        'database': 'fa-database',
-        'security': 'fa-shield-alt',
-    };
-
-    return 'fas ' + (categoryIcons[category] || 'fa-cube');
+    return null;
 }
 
 // 管理モード切り替え
