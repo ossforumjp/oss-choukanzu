@@ -174,7 +174,18 @@ function renderOSSLandscape() {
         categoryData.items.forEach((item, index) => {
             const ossItem = document.createElement('div');
             ossItem.className = 'oss-item';
-            ossItem.textContent = item.name;
+
+            // OSS名
+            const nameSpan = document.createElement('span');
+            nameSpan.className = 'oss-name';
+            nameSpan.textContent = item.name;
+
+            // アイコン
+            const icon = document.createElement('i');
+            icon.className = 'oss-icon ' + getIconClass(item.name, categoryData.category);
+
+            ossItem.appendChild(nameSpan);
+            ossItem.appendChild(icon);
 
             // 削除ボタン
             const deleteBtn = document.createElement('button');
@@ -243,6 +254,66 @@ function updateTooltipPosition(e) {
 
     tooltip.style.left = `${x}px`;
     tooltip.style.top = `${y}px`;
+}
+
+// OSS名とカテゴリに基づいてアイコンを取得
+function getIconClass(name, category) {
+    const nameLower = name.toLowerCase();
+
+    // 特定のOSSに対するアイコンマッピング
+    const iconMap = {
+        'kubernetes': 'fa-dharmachakra',
+        'docker': 'fa-docker',
+        'jenkins': 'fa-gears',
+        'postgresql': 'fa-database',
+        'mysql': 'fa-database',
+        'mongodb': 'fa-database',
+        'redis': 'fa-database',
+        'cassandra': 'fa-database',
+        'sqlite': 'fa-database',
+        'mariadb': 'fa-database',
+        'wordpress': 'fa-wordpress',
+        'drupal': 'fa-drupal',
+        'joomla': 'fa-joomla',
+        'git': 'fa-git-alt',
+        'github': 'fa-github',
+        'gitlab': 'fa-gitlab',
+        'linux': 'fa-linux',
+        'ubuntu': 'fa-ubuntu',
+        'centos': 'fa-centos',
+        'fedora': 'fa-fedora',
+        'python': 'fa-python',
+        'java': 'fa-java',
+        'node': 'fa-node-js',
+        'react': 'fa-react',
+        'angular': 'fa-angular',
+        'vue': 'fa-vuejs',
+        'aws': 'fa-aws',
+        'libreoffice': 'fa-file-alt',
+        'nextcloud': 'fa-cloud',
+    };
+
+    // 名前に基づく検索
+    for (let key in iconMap) {
+        if (nameLower.includes(key)) {
+            return 'fab ' + iconMap[key];
+        }
+    }
+
+    // カテゴリに基づくデフォルトアイコン
+    const categoryIcons = {
+        'analytics': 'fa-chart-line',
+        'office': 'fa-file-alt',
+        'communications': 'fa-comments',
+        'collaboration': 'fa-users',
+        'cms': 'fa-file-code',
+        'ecommerce': 'fa-shopping-cart',
+        'infrastructure': 'fa-server',
+        'database': 'fa-database',
+        'security': 'fa-shield-alt',
+    };
+
+    return 'fas ' + (categoryIcons[category] || 'fa-cube');
 }
 
 // 管理モード切り替え

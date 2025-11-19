@@ -6,8 +6,8 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: #333;
+    background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+    color: #e0e0e0;
     min-height: 100vh;
     padding: 20px;
 }
@@ -89,24 +89,29 @@ header h1 {
 }
 
 .category {
-    background: white;
-    border-radius: 15px;
-    padding: 25px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 30px;
     margin-bottom: 30px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
 }
 
 .category:hover {
     transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
 .category-title {
     font-size: 1.8rem;
     margin-bottom: 20px;
-    color: #667eea;
-    border-bottom: 3px solid #667eea;
+    color: #a0c4ff;
+    border-bottom: 3px solid #a0c4ff;
     padding-bottom: 10px;
+    font-weight: 700;
 }
 
 .oss-grid {
@@ -117,24 +122,47 @@ header h1 {
 
 .oss-item {
     position: relative;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, rgba(94, 114, 235, 0.3) 0%, rgba(138, 82, 212, 0.3) 100%);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     color: white;
-    padding: 20px;
-    border-radius: 10px;
+    padding: 20px 50px 20px 20px;
+    border-radius: 15px;
     cursor: pointer;
     transition: all 0.3s ease;
-    text-align: center;
+    text-align: left;
     font-weight: 600;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 80px;
 }
 
 .oss-item:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(138, 82, 212, 0.4);
+    border-color: rgba(255, 255, 255, 0.3);
 }
 
 .oss-item:active {
-    transform: scale(0.98);
+    transform: translateY(-2px);
+}
+
+.oss-name {
+    flex: 1;
+    padding-right: 10px;
+}
+
+.oss-icon {
+    font-size: 2rem;
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+.oss-item:hover .oss-icon {
+    opacity: 1;
+    transform: scale(1.1);
 }
 
 .tooltip {
@@ -201,48 +229,48 @@ footer a {
 
 /* カテゴリごとの色設定 */
 .category[data-category="analytics"] .category-title {
-    color: #3498db;
-    border-color: #3498db;
+    color: #5dade2;
+    border-color: #5dade2;
 }
 
 .category[data-category="office"] .category-title {
-    color: #e74c3c;
-    border-color: #e74c3c;
+    color: #ec7063;
+    border-color: #ec7063;
 }
 
 .category[data-category="communications"] .category-title {
-    color: #9b59b6;
-    border-color: #9b59b6;
+    color: #bb8fce;
+    border-color: #bb8fce;
 }
 
 .category[data-category="collaboration"] .category-title {
-    color: #1abc9c;
-    border-color: #1abc9c;
+    color: #48c9b0;
+    border-color: #48c9b0;
 }
 
 .category[data-category="cms"] .category-title {
-    color: #f39c12;
-    border-color: #f39c12;
+    color: #f8c471;
+    border-color: #f8c471;
 }
 
 .category[data-category="ecommerce"] .category-title {
-    color: #27ae60;
-    border-color: #27ae60;
+    color: #52be80;
+    border-color: #52be80;
 }
 
 .category[data-category="infrastructure"] .category-title {
-    color: #34495e;
-    border-color: #34495e;
+    color: #85929e;
+    border-color: #85929e;
 }
 
 .category[data-category="database"] .category-title {
-    color: #16a085;
-    border-color: #16a085;
+    color: #45b39d;
+    border-color: #45b39d;
 }
 
 .category[data-category="security"] .category-title {
-    color: #c0392b;
-    border-color: #c0392b;
+    color: #e74c3c;
+    border-color: #e74c3c;
 }
 
 /* モーダル */
@@ -269,13 +297,15 @@ footer a {
 }
 
 .modal-content {
-    background-color: white;
+    background: rgba(30, 30, 50, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     margin: 5% auto;
     padding: 30px;
-    border-radius: 15px;
+    border-radius: 20px;
     width: 90%;
     max-width: 500px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
     animation: slideDown 0.3s;
 }
 
@@ -301,12 +331,12 @@ footer a {
 
 .close:hover,
 .close:focus {
-    color: #000;
+    color: white;
 }
 
 .modal-content h2 {
     margin-bottom: 20px;
-    color: #667eea;
+    color: #a0c4ff;
 }
 
 /* フォーム */
@@ -318,7 +348,7 @@ footer a {
     display: block;
     margin-bottom: 8px;
     font-weight: 600;
-    color: #333;
+    color: #e0e0e0;
 }
 
 .form-group input,
@@ -326,18 +356,21 @@ footer a {
 .form-group select {
     width: 100%;
     padding: 10px;
-    border: 2px solid #ddd;
+    border: 2px solid rgba(255, 255, 255, 0.2);
     border-radius: 8px;
     font-size: 1rem;
     font-family: inherit;
-    transition: border-color 0.3s ease;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    transition: all 0.3s ease;
 }
 
 .form-group input:focus,
 .form-group textarea:focus,
 .form-group select:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: #a0c4ff;
+    background: rgba(255, 255, 255, 0.15);
 }
 
 .form-actions {
