@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSS鳥瞰図 2025</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>OSS鳥瞰図 2025</h1>
+        <p class="subtitle">オープンソースソフトウェアランドスケープ</p>
+        <div class="admin-controls">
+            <button id="admin-toggle" class="admin-btn">管理モード</button>
+            <button id="add-oss-btn" class="admin-btn add-btn" style="display: none;">+ OSS追加</button>
+            <button id="add-category-btn" class="admin-btn add-btn" style="display: none;">+ カテゴリ追加</button>
+            <button id="reset-data-btn" class="admin-btn reset-btn" style="display: none;">初期データに戻す</button>
+        </div>
+    </header>
+
+    <main id="oss-landscape">
+        <!-- カテゴリとOSSはJavaScriptで動的に生成 -->
+    </main>
+
+    <!-- OSS追加/編集モーダル -->
+    <div id="oss-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modal-title">OSS追加</h2>
+            <form id="oss-form">
+                <div class="form-group">
+                    <label for="category-select">カテゴリ</label>
+                    <select id="category-select" required>
+                        <option value="">選択してください</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="oss-name">OSS名</label>
+                    <input type="text" id="oss-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="oss-description">説明</label>
+                    <textarea id="oss-description" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="oss-url">URL</label>
+                    <input type="url" id="oss-url" required>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">保存</button>
+                    <button type="button" class="btn-secondary" id="cancel-btn">キャンセル</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- カテゴリ追加モーダル -->
+    <div id="category-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>カテゴリ追加</h2>
+            <form id="category-form">
+                <div class="form-group">
+                    <label for="category-name">カテゴリ名</label>
+                    <input type="text" id="category-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="category-id">カテゴリID（英数字、ハイフン可）</label>
+                    <input type="text" id="category-id" pattern="[a-z0-9-]+" required>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">追加</button>
+                    <button type="button" class="btn-secondary" id="category-cancel-btn">キャンセル</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>Source: <a href="https://ossforum.jp/" target="_blank">OSS Forum Japan</a></p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
