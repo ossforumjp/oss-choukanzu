@@ -1,0 +1,14 @@
+{
+  "name": "oss-choukanzu",
+  "private": true,
+  "description": "OSS鳥瞰図（日本OSS推進フォーラム 鳥瞰図WG）の公開サイト",
+  "license": "CC-BY-SA-4.0",
+  "type": "module",
+  "scripts": {
+    "build:icons": "node tools/build-icons.mjs",
+    "serve": "python3 -m http.server 8000"
+  },
+  "devDependencies": {
+    "simple-icons": "^16.29.0"
+  }
+}

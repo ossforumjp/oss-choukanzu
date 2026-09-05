@@ -1,85 +1,110 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" data-theme="auto">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OSS鳥瞰図 2025</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OSS鳥瞰図 | 日本OSS推進フォーラム</title>
+<meta name="description" content="日本OSS推進フォーラム 鳥瞰図WGがまとめたOSS鳥瞰図。分野ごとに主要なオープンソースソフトウェアを一覧で俯瞰できます。">
+<meta property="og:title" content="OSS鳥瞰図 | 日本OSS推進フォーラム">
+<meta property="og:description" content="分野ごとに主要なオープンソースソフトウェアを一覧で俯瞰できる、OSS選定のための地図。">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Zen+Old+Mincho:wght@600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-    <header>
-        <h1>OSS鳥瞰図 2025</h1>
-        <p class="subtitle">オープンソースソフトウェアランドスケープ</p>
-        <div class="admin-controls">
-            <button id="admin-toggle" class="admin-btn">管理モード</button>
-            <button id="add-oss-btn" class="admin-btn add-btn" style="display: none;">+ OSS追加</button>
-            <button id="add-category-btn" class="admin-btn add-btn" style="display: none;">+ カテゴリ追加</button>
-            <button id="reset-data-btn" class="admin-btn reset-btn" style="display: none;">初期データに戻す</button>
-        </div>
-    </header>
 
-    <main id="oss-landscape">
-        <!-- カテゴリとOSSはJavaScriptで動的に生成 -->
-    </main>
+<a class="skip" href="#map">本文へスキップ</a>
 
-    <!-- OSS追加/編集モーダル -->
-    <div id="oss-modal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2 id="modal-title">OSS追加</h2>
-            <form id="oss-form">
-                <div class="form-group">
-                    <label for="category-select">カテゴリ</label>
-                    <select id="category-select" required>
-                        <option value="">選択してください</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="oss-name">OSS名</label>
-                    <input type="text" id="oss-name" required>
-                </div>
-                <div class="form-group">
-                    <label for="oss-description">説明</label>
-                    <textarea id="oss-description" rows="3" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="oss-url">URL</label>
-                    <input type="url" id="oss-url" required>
-                </div>
-                <div class="form-actions">
-                    <button type="submit" class="btn-primary">保存</button>
-                    <button type="button" class="btn-secondary" id="cancel-btn">キャンセル</button>
-                </div>
-            </form>
-        </div>
+<header class="titleblock">
+  <div class="titleblock__name">
+    <h1>OSS鳥瞰図</h1>
+    <p class="titleblock__lead">「この分野では、どのOSSが使われているのか」に答えるための地図です。</p>
+  </div>
+  <dl class="titleblock__meta">
+    <div><dt>版</dt><dd id="meta-edition">—</dd></div>
+    <div><dt>収録数</dt><dd><span id="meta-count">—</span> 件</dd></div>
+    <div><dt>分野</dt><dd><span id="meta-zones">—</span> 分野 / <span id="meta-subs">—</span> カテゴリ</dd></div>
+    <div><dt>発行</dt><dd><a href="https://ossforum.jp/index.php/choukanzu-wg/">日本OSS推進フォーラム 鳥瞰図WG</a></dd></div>
+  </dl>
+</header>
+
+<div class="notice" id="draft-notice" hidden>
+  <p><strong>説明文は下書きです。</strong><span id="notice-body"></span></p>
+  <button type="button" class="notice__close" id="draft-dismiss" aria-label="この案内を閉じる">閉じる</button>
+</div>
+
+<div class="controls" role="search">
+  <div class="controls__row">
+    <div class="field">
+      <label class="field__label" for="q">絞り込み</label>
+      <input id="q" type="search" placeholder="OSS名・カテゴリ・説明で絞り込む（例: 監視, Kubernetes, ベクトル）" autocomplete="off" spellcheck="false">
+      <button type="button" id="q-clear" class="field__clear" hidden aria-label="絞り込みを解除">解除</button>
     </div>
-
-    <!-- カテゴリ追加モーダル -->
-    <div id="category-modal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>カテゴリ追加</h2>
-            <form id="category-form">
-                <div class="form-group">
-                    <label for="category-name">カテゴリ名</label>
-                    <input type="text" id="category-name" required>
-                </div>
-                <div class="form-group">
-                    <label for="category-id">カテゴリID（英数字、ハイフン可）</label>
-                    <input type="text" id="category-id" pattern="[a-z0-9-]+" required>
-                </div>
-                <div class="form-actions">
-                    <button type="submit" class="btn-primary">追加</button>
-                    <button type="button" class="btn-secondary" id="category-cancel-btn">キャンセル</button>
-                </div>
-            </form>
-        </div>
+    <div class="controls__actions">
+      <div class="seg" role="group" aria-label="表示密度">
+        <button type="button" data-density="compact" class="is-on">一覧</button>
+        <button type="button" data-density="detail">説明つき</button>
+      </div>
+      <button type="button" id="theme" class="btn" aria-label="配色を切り替える"><span id="theme-label">自動</span></button>
     </div>
+  </div>
+  <nav class="legend" id="legend" aria-label="分野の凡例">
+    <span class="legend__title">凡例</span>
+  </nav>
+  <p class="hits" id="hits" role="status" aria-live="polite"></p>
+</div>
 
-    <footer>
-        <p>Source: <a href="https://ossforum.jp/" target="_blank">OSS Forum Japan</a></p>
-    </footer>
+<main id="map" class="map" tabindex="-1"></main>
 
-    <script src="script.js"></script>
+<p class="empty" id="empty" hidden>該当するOSSはありません。別の語で試すか、絞り込みを解除してください。</p>
+
+<footer class="foot">
+  <div class="foot__notes">
+    <h2>この図の読み方</h2>
+    <ul>
+      <li>カテゴリを重複して掲載しているOSSもあります。</li>
+      <li>OSIの承認を受けていない一部の独自ライセンスのソフトウェアは掲載していません。</li>
+      <li>掲載は網羅ではなく、鳥瞰図WGが利用状況を観察して選定したものです。</li>
+    </ul>
+  </div>
+  <div class="foot__notes">
+    <h2>元データ・アーカイブ</h2>
+    <ul>
+      <li><a href="data/landscape.csv">landscape.csv</a> — このページが読み込んでいる掲載データ</li>
+      <li><a href="2026年02月版OSS鳥瞰図.pdf" id="foot-pdf">OSS鳥瞰図（PDF版）</a></li>
+      <li><a href="English translation of OSS Bird's-eye View_20230417.pdf">English translation (2023-04-17, PDF)</a></li>
+      <li><a href="https://github.com/ossforumjp/oss-choukanzu/issues">掲載の追加・修正を提案する（Issues）</a></li>
+    </ul>
+  </div>
+  <div class="foot__notes">
+    <h2>権利表示</h2>
+    <p>© 日本OSS推進フォーラム 鳥瞰図WG</p>
+    <p>本図は <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.ja" rel="license">CC BY-SA 4.0</a> で提供されます。各OSSの名称・ロゴは各権利者に帰属します。</p>
+  </div>
+</footer>
+
+<aside class="drawer" id="drawer" hidden aria-labelledby="drawer-name" role="dialog" aria-modal="false">
+  <div class="drawer__inner">
+    <button type="button" class="drawer__close" id="drawer-close" aria-label="詳細を閉じる">閉じる</button>
+    <p class="drawer__path" id="drawer-path"></p>
+    <div class="drawer__head">
+      <span class="drawer__mark" id="drawer-mark"></span>
+      <h2 id="drawer-name"></h2>
+    </div>
+    <p class="drawer__desc" id="drawer-desc"></p>
+    <p class="drawer__draft" id="drawer-draft" hidden>この説明文はAIの下書きです（WG査読前）。</p>
+    <dl class="drawer__facts" id="drawer-facts"></dl>
+    <div class="drawer__links" id="drawer-links"></div>
+    <p class="drawer__also" id="drawer-also"></p>
+    <div class="drawer__near" id="drawer-near"></div>
+  </div>
+</aside>
+
+<div class="drop" id="drop" hidden><p>CSV / JSON をここにドロップすると、この画面だけで差し替えて確認できます。</p></div>
+
+<script src="assets/app.js"></script>
 </body>
 </html>
